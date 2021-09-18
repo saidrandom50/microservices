@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  mongo_db:
+    image: mongo:3.2
+    volumes:
+      - post_db:/data/db
+    networks:
+      app:
+        aliases:
+          - post_db
+          - comment_db
+  ui:
+    build: ./app/ui
+    image: ${USERNAME}/ui:latest
+    ports:
+      - 127.0.0.1:9292:9292/tcp
+    networks:
+      - app
+  post:
+    build: ./app/post-py
+    image: ${USERNAME}/post:latest
+    networks:
+      - app
+  comment:
+    build: ./app/comment
+    image: ${USERNAME}/comment:latest
+    networks:
+      - app
+volumes:
+  post_db:
+
+networks:
+  app:
