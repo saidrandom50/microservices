@@ -1,7 +1,7 @@
 version: '3.3'
 services:
   mongo_db:
-    image: mongo:3.2
+    image: mongo:${MONGO_VERSION}
     volumes:
       - post_db:/data/db
     networks:
@@ -13,7 +13,7 @@ services:
     build: ./app/ui
     image: ${USERNAME}/ui:latest
     ports:
-      - 9292:9292/tcp
+      - ${PORT}
     networks:
       - front-net
   post:
